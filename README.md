@@ -9,8 +9,8 @@
 
 **학습할 기술**
 - FRONT : VUE3
-- SERVER : SPRING BOOT
-- DB 작업 : JPA, ORCLE 
+- SERVER : SPRING BOOT(3.1.8), JAVA(17) SwaggerUI
+- DB 작업 : JPA, MySql(8.0.26) 
 - 로그인 : Oauth2.0, JWT 
 - 배포 자동화 : Jenkins CI/CD
 - 배치 : Spring batch
