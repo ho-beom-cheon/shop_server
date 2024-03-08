@@ -2,6 +2,15 @@
 server:
   port: 8081  # 서버가 실행될 포트
 
+# 로깅 설정
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace # SQL 디스크립터 추적 레벨
+
 # 스프링 설정
 spring:
   # 데이터베이스 설정
@@ -21,11 +30,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect  # 사용할 SQL 방언
         use_sql_comments: true  # SQL 주석을 생성할지 여부
 
-# 로깅 설정
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace # SQL 디스크립터 추적 레벨
+

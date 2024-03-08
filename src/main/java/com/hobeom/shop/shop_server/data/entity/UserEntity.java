@@ -1,9 +1,13 @@
 package com.hobeom.shop.shop_server.data.entity;
 
+import com.querydsl.core.types.EntityPath;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 @Entity
 @Builder
@@ -44,8 +48,8 @@ public class UserEntity{
     @Column(name = "user_grade")
     private String userGrade;
 
-    @Column(name = "user_insert_date")
-    private String userInsertDate;
+    @CreatedDate
+    private Date userInsertDate;
 
 }
 
