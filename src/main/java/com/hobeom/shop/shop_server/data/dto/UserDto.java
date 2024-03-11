@@ -1,19 +1,17 @@
 package com.hobeom.shop.shop_server.data.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-// setter 메소드의 경우 의도 파악과 객체를 변경 할 수 있는 상태가 되어 안전성을 보장하기 어렵기 때문에 사용을 지양함.
-@Getter              //getter 메소드 생성
+@Data
 @AllArgsConstructor  //모든 필드를 매개변수로 받는 생성자
 @NoArgsConstructor   //기본 생성자
+@Builder
 public class UserDto {
     //아이디
-    private String userId;
+    private long userId;
     //패스워드
     private String userPassword;
     //이름
@@ -33,9 +31,12 @@ public class UserDto {
     //등급
     private String userGrade;
     //가입날짜
-    private Date userInsertDate;
+    private LocalDate userInsertDate;
 
-    public void setuserId(String userId){
-        this.userId = userId;
-    }
+//    private int serviceCheck; // 서비스 이용동의
+//    private int personalCheck; // 개인정보 이용동의
+//    private int smsCheck; // sms 이용동의
+//    private int emailCheck; // 이메일 이용동의
+//    private int callCheck; // 전화 수신 동의
+
 }

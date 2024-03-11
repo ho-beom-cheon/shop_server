@@ -57,6 +57,8 @@ dependencies {
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+    implementation 'org.modelmapper:modelmapper:2.4.4'
 }
 
 // === Querydsl 빌드 옵션 (선택사항) ===
