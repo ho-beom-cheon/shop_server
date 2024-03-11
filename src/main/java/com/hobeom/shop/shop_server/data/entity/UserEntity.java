@@ -1,25 +1,22 @@
 package com.hobeom.shop.shop_server.data.entity;
 
-import com.querydsl.core.types.EntityPath;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "user")
 public class UserEntity{
     @Id
-    // 자동으로 생성되는 값 사용 시 IDENTITY 전략 사용 (MySQL)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column( name = "user_id")
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long userId;
 
     @Column(name = "user_email")
     private String userEmail;
@@ -49,7 +46,7 @@ public class UserEntity{
     private String userGrade;
 
     @CreatedDate
-    private Date userInsertDate;
+    private LocalDate userInsertDate;
 
 }
 

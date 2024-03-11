@@ -10,7 +10,7 @@ public class UserOrderDto {
    //주문번호
    private int orderNumber;
    //아이디
-   private String userId;
+   private long userId;
    //주문날짜
    private String orderDate;
    //배송자주소1(우편번호)
