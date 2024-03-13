@@ -2,6 +2,7 @@ package com.hobeom.shop.shop_server.data.repository.Impl;
 
 import com.hobeom.shop.shop_server.data.entity.UserEntity;
 import com.hobeom.shop.shop_server.data.repository.UserRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,10 @@ public abstract class UserRepositoryImpl implements UserRepository{
 
     @PersistenceContext //
     private EntityManager em;
+
+    // qureydsl 사용
+     private final JPAQueryFactory queryFactory;
+
 
     @Override // 메서드 재정의
     public Optional<UserEntity> findByUserId(long userId) {

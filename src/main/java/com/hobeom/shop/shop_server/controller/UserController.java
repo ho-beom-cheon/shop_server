@@ -22,13 +22,13 @@ public class UserController {
     @Autowired // 의존성 주입
     UserService userService;
     @Operation(summary = "회원 조회", description = "회원을 조회합니다.")
-    @Parameter(name = "id",description = "userId", required = true)
     @RequestMapping(value = "/select", method = RequestMethod.GET)
-    public String selectUser(UserDto userdto, @RequestParam int id) {
+    public String selectUser(UserDto userdto) {
         String resStr = "";
 
         try {
-            userdto.setUserId(id);
+            userdto.setUserId(userdto.getUserId());
+            userdto.setUserPassword(userdto.getUserPassword()); //추후 암호화 복호화 처리 모듈  추가 예정
             userService.selectUser(userdto);
             resStr = "회원 조회 완료\n" + "id : [" + userdto.getUserId() + "]";
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class UserController {
     @Parameter(name = "emailCheck"    ,description = "emailCheck"    , required = true)
     @Parameter(name = "userRole"      ,description = "userRole"      )
     @Parameter(name = "userGrade"     ,description = "userGrade"     )
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public String registerUser(
         @RequestBody UserDto userdto,
         /* swagger 회원가입 테스트 */
@@ -120,5 +120,4 @@ public class UserController {
 
         return resStr;
     }
-
 }
