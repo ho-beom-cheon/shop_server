@@ -2,18 +2,17 @@ package com.hobeom.shop.shop_server.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@RequiredArgsConstructor
-public class QueryDSLConfig {
-    // EntityManager를 주입받음
-    private final EntityManager entityManager;
+public class QuerydslConfig {
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Bean // Bean으로 등록
-    public JPAQueryFactory jpaQueryFactory() {
+    @Bean
+    public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);
     }
 }
