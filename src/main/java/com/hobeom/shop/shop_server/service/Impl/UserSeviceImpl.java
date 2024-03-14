@@ -4,13 +4,15 @@ import com.hobeom.shop.shop_server.data.dto.UserDto;
 import com.hobeom.shop.shop_server.data.entity.UserEntity;
 import com.hobeom.shop.shop_server.data.repository.UserRepository;
 import com.hobeom.shop.shop_server.service.UserService;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,6 +23,7 @@ public class UserSeviceImpl implements UserService{
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final ModelMapper mapper ;
     UserEntity userEntity = new UserEntity();
     // 사용자 조회
@@ -33,14 +36,16 @@ public class UserSeviceImpl implements UserService{
 
     @Override
     @Transactional
-    public void signUp(UserDto userDto) {
+    public void save(UserDto userDto) {
         logger.info("signUp");
-        logger.info("userDto보기 : " + userDto.toString());
+        // 비밀번호 암호화
+        userDto.setUserPassword(passwordEncoder.encode(userDto.getUserPassword()));
+
+        //  dto -> entity 변환
         UserEntity userEntity = mapper.map(userDto, UserEntity.class);
 
+        // 중복 회원 검증
         validateDuplicateUser(userEntity);
-
-        logger.info("userEntity보기 : " + userEntity.toString());
 
         // save를 호출하는 시점에 insert쿼리가 나간다.(flush가 이루어진다.)
         userRepository.save(userEntity);
@@ -49,9 +54,9 @@ public class UserSeviceImpl implements UserService{
     // 사용자 수정
     @Override
     @Transactional
-    public void updateUser(long userId, UserDto userDto) {
+    public void updateUser(UserDto userDto) {
         logger.info("updateUser");
-        UserEntity persistance = userRepository.findByUserId(userId).orElseThrow(()
+        UserEntity persistance = userRepository.findByUserId(userDto.getUserId()).orElseThrow(()
                 -> new NoSuchElementException("해당 사용자가 없습니다."));
         persistance.setUserEmail("new@gmail.com");
     }

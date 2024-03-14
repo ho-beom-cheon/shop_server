@@ -11,7 +11,7 @@ public class QuerydslConfig {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Bean
+    @Bean // JPAQueryFactory 빈을 생성하여 반환한다.
     public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);
     }

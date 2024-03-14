@@ -23,8 +23,8 @@ public abstract class UserRepositoryImpl implements UserRepository{
 
     @Override // 메서드 재정의
     public Optional<UserEntity> findByUserId(long userId) {
-        UserEntity userEntity = em.find(UserEntity.class, userId); // userId로 UserEntity를 조회
-        return Optional.ofNullable(userEntity); // userEntity가 null이 아니면 Optional로 감싸서 반환
+        UserEntity userEntity = em.find(UserEntity.class, userId); // userId로 UserEntity 조회
+        return Optional.ofNullable(userEntity); // userEntity가 null이 아니면 userEntity 반환
     }
 
     @Override // 메서드 재정의
