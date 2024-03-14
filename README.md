@@ -14,3 +14,8 @@
 - 로그인 : Oauth2.0, JWT 
 - 배포 자동화 : Jenkins CI/CD
 - 배치 : Spring batch
+
+
+
+**ERD**
+![shop_db](https://github.com/ho-beom-cheon/shop_server/assets/59195652/17b73c06-c021-43e9-a483-e2629f7f349e)
