@@ -2,70 +2,51 @@ package com.hobeom.shop.shop_server.controller;
 
 import com.hobeom.shop.shop_server.data.dto.UserDto;
 import com.hobeom.shop.shop_server.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final UserService userService;
 
-    @Autowired // 의존성 주입
-    UserService userService;
-    @RequestMapping(value = "/select", method = RequestMethod.GET)
-    public String selectUser(UserDto userdto) {
-        String resStr = "";
-
-        try {
-            userdto.setUserId(userdto.getUserId());
-            userdto.setUserPassword(userdto.getUserPassword()); //추후 암호화 복호화 처리 모듈  추가 예정
-            userService.selectUser(userdto);
-            resStr = "회원 조회 완료\n" + "id : [" + userdto.getUserId() + "]";
-        } catch (Exception e) {
-            resStr = e.getMessage();
-        }
-
-        return resStr;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.ok("hello");
+    }
+
+    @PostMapping("/test-redirect")
+    public void testRedirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/api/user");
+    }
+
     @PostMapping("/signup")
-    public void registerUser(@RequestBody UserDto userdto) {
-        try {
-            userService.save(userdto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public ResponseEntity<UserDto> signup(
+            @Valid @RequestBody UserDto userDto
+    ) {
+        return ResponseEntity.ok(userService.signup(userDto));
     }
-    // 회원 수정
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public String updateUser(UserDto userdto) {
-        String resStr = "";
 
-        try {
-                userdto.setUserId(userdto.getUserId());
-                userService.updateUser(userdto);
-
-            resStr = "회원 수정 완료\n" + "id : [" + userdto.getUserId() + "]";
-        } catch (Exception e) {
-            resStr = e.getMessage();
-        }
-
-        return resStr;
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<UserDto> getMyUserInfo(HttpServletRequest request) {
+        return ResponseEntity.ok(userService.getMyUserWithAuthorities());
     }
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public String deleteUser(UserDto userdto) {
-        String resStr = "";
 
-        try {
-            userdto.setUserId(userdto.getUserId());
-            userService.deleteUser(userdto);
-            resStr = "회원 삭제 완료\n" + "id : [" + userdto.getUserId() + "]";
-        } catch (Exception e) {
-            resStr = e.getMessage();
-        }
-
-        return resStr;
+    @GetMapping("/user/{username}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getUserWithAuthorities(username));
     }
 }
