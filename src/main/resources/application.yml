@@ -1,6 +1,10 @@
 # 서버 설정
 server:
-  port: 8081  # 서버가 실행될 포트
+  port: 8082  # 서버가 실행될 포트
+
+jwt :
+  secret : VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  jwt.token-validity-in-seconds : 3600 # JWT 만료 시간
 
 # 로깅 설정
 logging:
@@ -10,7 +14,6 @@ logging:
         type:
           descriptor:
             sql: trace
-
 
 # 스프링 설정
 spring:
@@ -30,5 +33,7 @@ spring:
         ddl-auto: update  # 데이터베이스 스키마 업데이트 전략 (실제 배포 시에는 none으로 변경하여 사용해야 한다.
         dialect: org.hibernate.dialect.MySQL8Dialect  # 사용할 SQL 방언
         use_sql_comments: true  # SQL 주석을 생성할지 여부
+
+
 
 
